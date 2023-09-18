@@ -5,9 +5,14 @@ public class MyLinkedList <T> {
 	
 	class Node {
 		// FIXME add member variables
-		
-		Node(T data) { // Node inherits T from MyLinkedList
+
+		T data;
+		Node next;
+
+		Node(T data) {
 			// FIXME
+			this.data = data;
+			this.next = null;
 		}
 	}
 
@@ -16,8 +21,16 @@ public class MyLinkedList <T> {
 	/**
 	 * Construct an MyLinkedList.
 	 */
+
+	private Node head;
+	private Node tail;
+	private int size;
 	public MyLinkedList() {
 		// FIXME
+		this.head = null;
+		this.tail = null;
+		this.size = 0;
+
 	}
 
 	/**
@@ -26,7 +39,7 @@ public class MyLinkedList <T> {
 	 * @return The number of elements in the MyLinkedList.
 	 */
 	public int size() {
-		return 0; // FIXME
+		return this.size; // FIXME
 	}
 
 	/**
@@ -36,6 +49,17 @@ public class MyLinkedList <T> {
 	 */
 	public void add(T element) {
 		// FIXME
+		Node newNode = new Node(element);
+		if (this.size == 0) {
+			this.head = newNode;
+			this.tail = newNode;
+		}
+		else {
+			Node lastNode = this.tail;
+			lastNode.next = newNode;
+			this.tail = newNode;
+		}
+		this.size++;
 	}
 
 	/**
@@ -47,7 +71,12 @@ public class MyLinkedList <T> {
 	 * @return The element at the specified index.
 	 */
 	public T get(int index) {
-		return null; // FIXME
+		Node currNode = this.head;
+		int currIndex = 0;
+		for (int i = 0; i < index; i++) {
+			currNode = currNode.next;
+		}
+		return currNode.data; // FIXME
 	}
 
 	/**
@@ -58,8 +87,35 @@ public class MyLinkedList <T> {
 	 * @param index The index to remove.
 	 */
 	public void remove(int index) {
-		// FIXME
+		if (this.size == 1){
+			this.head = null;
+			this.tail = null;
+		}
+		else if (index == 0) {
+			// FIXME remove head
+			this.head = this.head.next;
+		}
+		else if (index == this.size-1) {
+			// FIXME remove tail
+			Node currNode = this.head;
+			for (int i = 0; i<index - 1; i++) {
+				currNode = currNode.next;
+			}
+				currNode.next = null;
+			this.tail = currNode;
+		}
+		else {
+			Node currNode = this.head;
+			for (int i = 0; i <index-1; i++){
+				currNode = currNode.next;
+			}
+			currNode.next = currNode.next.next;
+			// FIXME remove middle
+
+		}
+		this.size--;
 	}
+
 
 	/**
 	 * Create a String representation of the MyLinkedList.
@@ -84,7 +140,7 @@ public class MyLinkedList <T> {
 	 * If the list and the array are not the same, throw an AssertionError.
 	 *
 	 * @param list The MyLinkedList to check.
-	 * @param answer The expected answer, in the form of an int array.
+	 * @param answer  The expected answer, in the form of an int array.
 	 */
 	public static void assertArraysEqual(MyLinkedList list, int[] answer) {
 		if (list.size() != answer.length) {

@@ -1,8 +1,29 @@
 import java.lang.AssertionError;
 
+
+/* REVIEW QUESTIONS:
+1. An ArrayList is an array that can be resized by creating another array within the underlying structure
+ with all the same elements as the first array.
+
+2. A LinkedList is a data structure where the elements are stored in individual nodes, and are connected
+through pointers which point to the next element. The size of the LinkedList increases everytime you add an
+element, and decreases when you remove an element from the list. LinkedList is different from ArrayList in that
+LinkedLists are better for adding and removing elements, whereas ArrayList is better for when you need to access
+elements from the index. Linked list also do not use arrays, whereas arraylist does use arrays.
+
+ */
+
 public class MyArrayList<T> {
 
 	// FIXME add member variables
+	// member variable is a variable that is associated with a specific object and accessible for al lits methods (member functions)
+	// Do we need to change to generics?
+//private int[] array = null; //initalizing
+T[] array = (T[]) new Object [8];
+private int size = 0;
+
+
+
 
 	/**
 	 * Construct an MyArrayList with a given initial length.
@@ -11,6 +32,11 @@ public class MyArrayList<T> {
 	 */
 	public MyArrayList (int initialLength) { // we do not need to redeclare the <T> type in the constructor
 		// FIXME
+		//this.array = new T[initialLength]; //instantiating
+		this.array = (T[]) new Object [8];
+		this.size=0;
+
+
 	}
 
 	/**
@@ -19,7 +45,7 @@ public class MyArrayList<T> {
 	 * @return The number of elements in the MyArrayList.
 	 */
 	public int size() {
-		return 0; // FIXME
+		return this.size; // FIXME
 	}
 
 
@@ -29,7 +55,12 @@ public class MyArrayList<T> {
 	 * @param element The element to add.
 	 */
 	public void add(T element) {
-		// FIXME
+		if (this.size >= this.array.length) {
+			resize();
+		}
+		this.array[this.size] = element;
+		this.size++;
+
 	}
 
 	/**
@@ -41,7 +72,9 @@ public class MyArrayList<T> {
 	 * @return The element at the specified index.
 	 */
 	public T get(int index) {
-		return null; // FIXME
+
+		return this.array[index];
+
 	}
 
 	/**
@@ -53,13 +86,28 @@ public class MyArrayList<T> {
 	 */
 	public void remove(int index) {
 		// FIXME
+
+
+		if (index<this.size){
+			for (int i = index; i < this.array.length - 1; i++) {
+				this.array[i] = this.array[i + 1];
+			}
+			this.size--;
+
+		}
+
 	}
 
-	/**
-	 * Double the size of the internal array.
-	 */
+
 	private void resize() {
 		//FIXME
+		// create another array that is twice the size
+		T[] newArray = (T[]) new Object [this.array.length*2];
+
+		for (int i = 0; i<this.size; i++) {
+			newArray[i] = this.array[i];
+		}
+		this.array = newArray;
 	}
 
 	/**
@@ -98,6 +146,11 @@ public class MyArrayList<T> {
 		}
 	}
 
+
+
+
+
+
 	/*
 	 * Test that the empty arraylist has size 0.
 	 */
@@ -127,8 +180,13 @@ public class MyArrayList<T> {
 		for (int i = 0; i < 5; i++) {
 			list.add(i * i);
 		}
+
+
 		list.remove(1);
+
+
 		list.remove(2);
+
 		int[] answer = {0, 4, 16};
 		MyArrayList.assertArraysEqual(list, answer);
 	}
