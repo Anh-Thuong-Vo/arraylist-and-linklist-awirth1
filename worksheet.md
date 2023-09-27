@@ -1,3 +1,5 @@
+Feedback: Code is good. However, you have not answered any questions in the worksheet, that is Review 1 2, Challenge 3 a, b Challenge 4. That is more than half of the worksheet. You may turn this in using a late pass
+
 # 9/11 Worksheet: ArrayLists and LinkedLists
 ## Initial due date: *09/18 @11:59pm*
 
